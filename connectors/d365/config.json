@@ -1,0 +1,19 @@
+{
+  "sourcesystem": "D365",
+  "auth": {
+    "tenantId": "YOUR_TENANT_ID",
+    "clientId": "YOUR_CLIENT_ID",
+    "clientSecret": "YOUR_CLIENT_SECRET_IN_KEY_VAULT",
+    "resource": "https://YOUR_D365_ORG.crm.dynamics.com"
+  },
+  "sync": {
+    "endpoint": "https://YOUR_D365_ORG.crm.dynamics.com/api/data/v9.2/msdyn_workorders",
+    "pageSize": 100,
+    "incrementalField": "modifiedon",
+    "initialSyncDaysBack": 90
+  },
+  "target": {
+    "dataverseUrl": "https://YOUR_TARGET_ORG.crm.dynamics.com",
+    "table": "fma_workorders"
+  }
+}

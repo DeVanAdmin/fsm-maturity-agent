@@ -1,0 +1,28 @@
+{
+  "sourceTable": "msdyn_workorders",
+  "targetTable": "fma_workorders",
+  "mappings": [
+    { "source": "msdyn_workorderid", "target": "fma_externalsourceid", "transform": "toString" },
+    { "source": "msdyn_name", "target": "fma_workordernumber", "transform": "none" },
+    { "source": "msdyn_systemstatus", "target": "fma_status", "transform": "mapD365Status" },
+    { "source": "msdyn_timewindowstart", "target": "fma_scheduledstart", "transform": "toUTC" },
+    { "source": "msdyn_timewindowend", "target": "fma_scheduledend", "transform": "toUTC" },
+    { "source": "msdyn_actualstarttime", "target": "fma_actualstart", "transform": "toUTC" },
+    { "source": "msdyn_actualduration", "target": "fma_laborminutes", "transform": "none" },
+    { "source": "_msdyn_primaryincidenttype_value", "target": "fma_assetid", "transform": "toString" },
+    { "source": "_ownerid_value", "target": "fma_technicianid", "transform": "toString" },
+    { "source": "msdyn_totalcost", "target": "fma_totalcost", "transform": "toCurrency" }
+  ],
+  "staticValues": {
+    "fma_sourcesystem": 100000000
+  },
+  "statusMap": {
+    "690970000": "Open",
+    "690970001": "Open",
+    "690970002": "Open",
+    "690970003": "In Progress",
+    "690970004": "In Progress",
+    "690970005": "Completed",
+    "690970006": "Cancelled"
+  }
+}

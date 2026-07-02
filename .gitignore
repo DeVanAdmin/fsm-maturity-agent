@@ -24,3 +24,7 @@ local.settings.json
 # Environment files
 .env
 .env.local
+
+# Connector runtime state and secrets
+connectors/**/.sync_state.json
+connectors/**/.env
