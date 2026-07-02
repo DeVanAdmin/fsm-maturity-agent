@@ -1,0 +1,21 @@
+{
+  "sourcesystem": "ServiceNow",
+  "auth": {
+    "instanceUrl": "https://YOUR_INSTANCE.service-now.com",
+    "clientId": "YOUR_OAUTH_CLIENT_ID",
+    "clientSecret": "YOUR_OAUTH_CLIENT_SECRET",
+    "username": "YOUR_SERVICE_ACCOUNT_USERNAME",
+    "password": "YOUR_SERVICE_ACCOUNT_PASSWORD"
+  },
+  "sync": {
+    "table": "wm_order",
+    "pageSize": 100,
+    "incrementalField": "sys_updated_on",
+    "initialSyncDaysBack": 90,
+    "fields": "sys_id,number,state,opened_at,closed_at,work_start,work_end,assigned_to,cmdb_ci,short_description,actual_duration,sla_due,upon_approval,contract,total_effort"
+  },
+  "target": {
+    "dataverseUrl": "https://YOUR_TARGET_ORG.crm.dynamics.com",
+    "table": "fma_workorders"
+  }
+}

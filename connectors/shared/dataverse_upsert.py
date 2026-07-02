@@ -1,10 +1,14 @@
 # connectors/shared/dataverse_upsert.py
-# Shared Dataverse upsert utility used by all connectors.
-# Extracted here because every connector (D365, Salesforce, ServiceNow, IFS,
-# Custom) writes to the same target Dataverse org in exactly the same way —
-# an alternate-key PATCH keyed on fma_externalsourceid. Centralizing it means
-# there is a single, tested code path for writes instead of one copy per
-# connector.
+"""Single shared Dataverse write utility for all five FSM connectors.
+
+Every connector — D365, Salesforce, ServiceNow, IFS, and Custom — writes to the
+same target Dataverse org in exactly the same way: an idempotent, alternate-key
+PATCH keyed on ``fma_externalsourceid``. Rather than copy that logic into each
+connector, both the write-token acquisition (``get_dataverse_token``) and the
+upsert itself (``upsert_record``) live here as the one tested code path. Each
+connector authenticates to *its own* source system however it must, then routes
+all Dataverse writes through this module.
+"""
 
 import json
 

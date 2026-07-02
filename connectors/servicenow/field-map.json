@@ -1,0 +1,30 @@
+{
+  "sourceTable": "wm_order",
+  "targetTable": "fma_workorders",
+  "mappings": [
+    { "source": "sys_id", "target": "fma_externalsourceid", "transform": "toString" },
+    { "source": "number", "target": "fma_workordernumber", "transform": "none" },
+    { "source": "state", "target": "fma_status", "transform": "mapServiceNowState" },
+    { "source": "opened_at", "target": "fma_scheduledstart", "transform": "toUTC" },
+    { "source": "sla_due", "target": "fma_scheduledend", "transform": "toUTC" },
+    { "source": "work_start", "target": "fma_actualstart", "transform": "toUTC" },
+    { "source": "work_end", "target": "fma_actualend", "transform": "toUTC" },
+    { "source": "total_effort", "target": "fma_laborminutes", "transform": "durationToMinutes" },
+    { "source": "cmdb_ci", "target": "fma_assetid", "transform": "extractDisplayValue" },
+    { "source": "assigned_to", "target": "fma_technicianid", "transform": "extractDisplayValue" },
+    { "source": "upon_approval", "target": "fma_slacompliant", "transform": "inferSlaCompliance" }
+  ],
+  "staticValues": {
+    "fma_sourcesystem": 100000002
+  },
+  "stateMap": {
+    "1": "Open",
+    "2": "Open",
+    "3": "In Progress",
+    "4": "In Progress",
+    "5": "In Progress",
+    "6": "Completed",
+    "7": "Cancelled",
+    "8": "Cancelled"
+  }
+}
