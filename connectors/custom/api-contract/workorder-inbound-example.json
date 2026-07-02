@@ -1,0 +1,55 @@
+// FSM Maturity Agent — Custom Work Order Inbound: EXAMPLE payload
+// This file is illustrative (JSONC with comments). The machine-readable
+// contract is workorder-inbound-schema.json. Send plain JSON (no comments)
+// to the gateway. Every field below is populated to show a complete push.
+{
+  // REQUIRED. The fma_client GUID assigned to you during onboarding.
+  // Must be a valid UUID. Identifies which client org this work order belongs to.
+  "clientId": "3f9a1c2e-7b44-4e8a-9c1d-2a6f5b0e91d7",
+
+  // REQUIRED. The work order's ID in YOUR system. This is the idempotency /
+  // upsert key — re-sending the same value updates the existing record.
+  "externalSourceId": "WO-2026-000148",
+
+  // REQUIRED. Human-readable work order number (max 50 chars).
+  "workOrderNumber": "000148",
+
+  // REQUIRED. One of exactly: Open | In Progress | Completed | Cancelled.
+  "status": "Completed",
+
+  // REQUIRED. Scheduled start. ISO 8601 UTC only (note the trailing Z).
+  "scheduledStart": "2026-03-15T08:00:00Z",
+
+  // Optional. Scheduled end. ISO 8601 UTC.
+  "scheduledEnd": "2026-03-15T12:00:00Z",
+
+  // Optional. Actual on-site start. ISO 8601 UTC.
+  "actualStart": "2026-03-15T08:12:00Z",
+
+  // Optional. Actual completion. ISO 8601 UTC.
+  "actualEnd": "2026-03-15T10:47:00Z",
+
+  // Optional. True if the issue was resolved on the first visit.
+  "firstTimeFix": true,
+
+  // Optional. Total number of visits for this work order (integer >= 1).
+  "visitCount": 1,
+
+  // Optional. Technician identifier in your system (max 100 chars).
+  "technicianId": "TECH-4471",
+
+  // Optional. Asset / equipment identifier in your system (max 100 chars).
+  "assetId": "PUMP-STN-04",
+
+  // Optional. True if the SLA was met for this work order.
+  "slaCompliant": true,
+
+  // Optional. Labor time in whole minutes (integer >= 0).
+  "laborMinutes": 155,
+
+  // Optional. Travel time in whole minutes (integer >= 0).
+  "travelMinutes": 35,
+
+  // Optional. Total cost as a number (>= 0). Use your reporting currency.
+  "totalCost": 486.50
+}

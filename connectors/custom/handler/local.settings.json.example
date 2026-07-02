@@ -1,0 +1,22 @@
+// ---------------------------------------------------------------------------
+// local.settings.json.example
+//
+// This is a TEMPLATE. The real `local.settings.json` is gitignored and must
+// never be committed — it holds secrets. Copy this file to `local.settings.json`
+// and fill in the values for local development ONLY.
+//
+// In production these values do NOT live in a settings file. They are supplied
+// as Azure Function App application settings sourced from Azure Key Vault
+// (Key Vault references), so secrets are never stored in the repo or on disk.
+// ---------------------------------------------------------------------------
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "python",
+    "FMA_DATAVERSE_URL": "",
+    "FMA_DATAVERSE_TENANT_ID": "",
+    "FMA_DATAVERSE_CLIENT_ID": "",
+    "FMA_DATAVERSE_CLIENT_SECRET": ""
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "FSM Maturity Agent — Custom Work Order Inbound Schema",
+  "description": "Standard payload contract for custom FSM systems pushing work order data to the FSM Maturity Agent gateway",
+  "type": "object",
+  "required": ["clientId", "externalSourceId", "workOrderNumber", "status", "scheduledStart"],
+  "properties": {
+    "clientId": { "type": "string", "format": "uuid", "description": "The fma_client GUID assigned during onboarding" },
+    "externalSourceId": { "type": "string", "maxLength": 100, "description": "The work order ID in the source system — used as upsert key" },
+    "workOrderNumber": { "type": "string", "maxLength": 50 },
+    "status": { "type": "string", "enum": ["Open", "In Progress", "Completed", "Cancelled"] },
+    "scheduledStart": { "type": "string", "format": "date-time", "description": "ISO 8601 UTC datetime" },
+    "scheduledEnd": { "type": "string", "format": "date-time" },
+    "actualStart": { "type": "string", "format": "date-time" },
+    "actualEnd": { "type": "string", "format": "date-time" },
+    "firstTimeFix": { "type": "boolean" },
+    "visitCount": { "type": "integer", "minimum": 1 },
+    "technicianId": { "type": "string", "maxLength": 100 },
+    "assetId": { "type": "string", "maxLength": 100 },
+    "slaCompliant": { "type": "boolean" },
+    "laborMinutes": { "type": "integer", "minimum": 0 },
+    "travelMinutes": { "type": "integer", "minimum": 0 },
+    "totalCost": { "type": "number", "minimum": 0 }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,68 @@
+<!--
+  Azure API Management — Inbound processing policy for the Custom FSM gateway.
+  Applies to the /fma/v1/workorders and /fma/v1/workorders/batch operations.
+
+  Subscription-key authentication is handled NATIVELY by APIM: the API is
+  configured to require a subscription, so a request without a valid
+  Ocp-Apim-Subscription-Key is rejected (401) before this policy runs. The
+  checks below cover everything else — content type, correlation, source-system
+  stamping, rate limiting, and backend routing.
+-->
+<policies>
+  <inbound>
+    <base />
+
+    <!-- Reject anything that is not application/json. -->
+    <choose>
+      <when condition="@(!context.Request.Headers.GetValueOrDefault("Content-Type","").Contains("application/json"))">
+        <return-response>
+          <set-status code="400" reason="Bad Request" />
+          <set-header name="Content-Type" exists-action="override">
+            <value>application/json</value>
+          </set-header>
+          <set-body>@{
+            return new JObject(
+              new JProperty("error", new JObject(
+                new JProperty("code", "invalid_content_type"),
+                new JProperty("message", "Content-Type must be application/json"),
+                new JProperty("correlationId", context.RequestId.ToString())
+              ))
+            ).ToString();
+          }</set-body>
+        </return-response>
+      </when>
+    </choose>
+
+    <!-- Stamp a correlation id for end-to-end tracing (APIM logs + Function logs). -->
+    <set-header name="X-Correlation-Id" exists-action="override">
+      <value>@(context.RequestId.ToString())</value>
+    </set-header>
+
+    <!-- Record the Custom source-system option value and pass it to the backend. -->
+    <set-variable name="fma_sourcesystem" value="100000004" />
+    <set-header name="X-FMA-SourceSystem" exists-action="override">
+      <value>100000004</value>
+    </set-header>
+
+    <!-- Rate limit: 100 calls per minute per subscription key. -->
+    <rate-limit-by-key
+        calls="100"
+        renewal-period="60"
+        counter-key="@(context.Subscription?.Key ?? context.Request.IpAddress)" />
+
+    <!-- Route to the backend Azure Function handler. -->
+    <set-backend-service base-url="https://YOUR_FUNCTION_APP.azurewebsites.net/api/fma/v1" />
+  </inbound>
+
+  <backend>
+    <base />
+  </backend>
+
+  <outbound>
+    <base />
+  </outbound>
+
+  <on-error>
+    <base />
+  </on-error>
+</policies>

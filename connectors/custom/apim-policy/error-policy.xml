@@ -1,0 +1,49 @@
+<!--
+  Azure API Management — on-error policy for the Custom FSM gateway.
+  Guarantees that EVERY error (from APIM itself or bubbled up from the backend)
+  is returned in one consistent JSON envelope:
+
+    { "error": { "code": "string", "message": "string", "correlationId": "string" } }
+
+  HTTP status is preserved and mapped to a stable machine-readable code:
+    400 → validation_error   401 → authentication_error
+    429 → rate_limit_exceeded  (any other / 500) → internal_error
+-->
+<policies>
+  <on-error>
+    <base />
+
+    <!-- Resolve the effective status code (default 500 if none set). -->
+    <set-variable name="httpStatus" value="@(context.Response?.StatusCode ?? 500)" />
+
+    <!-- Map the status code to a stable error code. -->
+    <set-variable name="errorCode" value="@{
+        int sc = (int)context.Variables["httpStatus"];
+        switch (sc)
+        {
+            case 400: return "validation_error";
+            case 401: return "authentication_error";
+            case 429: return "rate_limit_exceeded";
+            default:  return "internal_error";
+        }
+    }" />
+
+    <return-response>
+      <set-status code="@((int)context.Variables["httpStatus"])" />
+      <set-header name="Content-Type" exists-action="override">
+        <value>application/json</value>
+      </set-header>
+      <set-body>@{
+        var message = context.LastError?.Message;
+        if (string.IsNullOrEmpty(message)) { message = "An unexpected error occurred."; }
+        return new JObject(
+          new JProperty("error", new JObject(
+            new JProperty("code", (string)context.Variables["errorCode"]),
+            new JProperty("message", message),
+            new JProperty("correlationId", context.RequestId.ToString())
+          ))
+        ).ToString();
+      }</set-body>
+    </return-response>
+  </on-error>
+</policies>

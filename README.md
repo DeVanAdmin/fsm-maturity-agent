@@ -15,6 +15,20 @@ Key components:
 - **Azure Functions (Python)** — scoring engine
 - **GitHub Actions** — CI/CD
 
+## Connectors
+
+Data reaches the `fma_workorder` table through five source connectors. Four are **pull-based** — we poll the source system on a schedule and pull work orders out of it. One is **push-based** — the client's system sends work orders to us.
+
+| Connector | Model | How data moves |
+|---|---|---|
+| D365 Field Service | Pull | We poll the Dataverse Web API |
+| Salesforce FSL | Pull | We poll the Salesforce REST/SOQL API |
+| ServiceNow FSM | Pull | We poll the ServiceNow Table API |
+| IFS | Pull | We poll the IFS OData v4 API |
+| Custom | **Push** | The client's bespoke system POSTs to our APIM gateway |
+
+The **Custom** connector is a push-based gateway (Azure API Management + an Azure Function): we cannot predict what API a homegrown FSM system exposes, so instead of polling it we define a standard inbound contract and the client pushes data to us. The other four are pull-based because those platforms expose well-known APIs we can query directly.
+
 ## Build Steps
 
 - `01` — Repo setup + folder structure
