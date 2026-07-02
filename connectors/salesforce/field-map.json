@@ -1,0 +1,30 @@
+{
+  "sourceTable": "WorkOrder",
+  "targetTable": "fma_workorders",
+  "mappings": [
+    { "source": "Id", "target": "fma_externalsourceid", "transform": "toString" },
+    { "source": "WorkOrderNumber", "target": "fma_workordernumber", "transform": "none" },
+    { "source": "Status", "target": "fma_status", "transform": "mapSalesforceStatus" },
+    { "source": "StartDate", "target": "fma_scheduledstart", "transform": "toUTC" },
+    { "source": "EndDate", "target": "fma_scheduledend", "transform": "toUTC" },
+    { "source": "ActualStartTime", "target": "fma_actualstart", "transform": "toUTC" },
+    { "source": "ActualEndTime", "target": "fma_actualend", "transform": "toUTC" },
+    { "source": "Duration", "target": "fma_laborminutes", "transform": "none" },
+    { "source": "AssetId", "target": "fma_assetid", "transform": "toString" },
+    { "source": "OwnerId", "target": "fma_technicianid", "transform": "toString" },
+    { "source": "TotalPrice", "target": "fma_totalcost", "transform": "toCurrency" },
+    { "source": "IsClosed", "target": "fma_firsttimefix", "transform": "inferFirstTimeFix" }
+  ],
+  "staticValues": {
+    "fma_sourcesystem": 100000001
+  },
+  "statusMap": {
+    "New": "Open",
+    "In Progress": "In Progress",
+    "On Hold": "In Progress",
+    "Completed": "Completed",
+    "Cannot Complete": "Cancelled",
+    "Closed": "Completed",
+    "Cancelled": "Cancelled"
+  }
+}

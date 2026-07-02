@@ -11,6 +11,7 @@ import pytest
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 import connector  # noqa: E402
+from shared import dataverse_upsert  # noqa: E402
 
 
 FIELD_MAP = {
@@ -109,7 +110,8 @@ def test_fetch_follows_next_link_pagination():
 def test_upsert_uses_patch_not_post():
     """Upsert must use PATCH (idempotent alternate-key upsert), never POST."""
     record = {"fma_externalsourceid": "wo-1", "fma_workordernumber": "WO-1", "fma_client": "c"}
-    with mock.patch.object(connector, "requests") as m:
+    # The write path now lives in the shared utility (Step 04 refactor), so patch there.
+    with mock.patch.object(dataverse_upsert, "requests") as m:
         resp = mock.Mock()
         resp.status_code = 204
         resp.raise_for_status.return_value = None

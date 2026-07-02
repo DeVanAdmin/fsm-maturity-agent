@@ -1,0 +1,21 @@
+{
+  "sourcesystem": "Salesforce",
+  "auth": {
+    "loginUrl": "https://login.salesforce.com",
+    "clientId": "YOUR_CONNECTED_APP_CLIENT_ID",
+    "clientSecret": "YOUR_CONNECTED_APP_CLIENT_SECRET",
+    "username": "YOUR_SERVICE_ACCOUNT_USERNAME",
+    "password": "YOUR_SERVICE_ACCOUNT_PASSWORD_PLUS_TOKEN"
+  },
+  "sync": {
+    "apiVersion": "v59.0",
+    "pageSize": 200,
+    "incrementalField": "LastModifiedDate",
+    "initialSyncDaysBack": 90,
+    "soqlBase": "SELECT Id, WorkOrderNumber, Status, StartDate, EndDate, ActualStartTime, ActualEndTime, Subject, AccountId, AssetId, OwnerId, Duration, IsClosed, SlaExitDate, TotalPrice FROM WorkOrder"
+  },
+  "target": {
+    "dataverseUrl": "https://YOUR_TARGET_ORG.crm.dynamics.com",
+    "table": "fma_workorders"
+  }
+}

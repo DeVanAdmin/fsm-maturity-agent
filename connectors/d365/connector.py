@@ -2,6 +2,7 @@
 # D365 Field Service → fma_workorder ingestion connector
 
 import os
+import sys
 import json
 import logging
 from datetime import datetime, timedelta, timezone
@@ -9,6 +10,16 @@ from typing import Optional
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 logger = logging.getLogger("d365_connector")
+
+# Refactor (Step 04): the Dataverse write path (token + alternate-key upsert) is
+# no longer defined locally — it lives in connectors/shared/dataverse_upsert.py
+# so all five connectors share one tested implementation. We import it here and
+# keep a thin upsert_workorder() wrapper below for the D365-specific call shape.
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+from shared.dataverse_upsert import (  # noqa: E402
+    get_dataverse_token,  # noqa: F401  (re-exported for callers/consistency)
+    upsert_record,
+)
 
 # `requests` is imported lazily so the pure-Python transform and sync-state
 # logic (and their unit tests) can run in environments where the HTTP stack
@@ -217,37 +228,20 @@ def transform_workorder(raw: dict, field_map: dict, client_id: str) -> dict:
 def upsert_workorder(record: dict, target_url: str, access_token: str) -> dict:
     """
     Upserts a normalized fma_workorder record into the target Dataverse org.
-    Uses PATCH against the alternate key
-    fma_workorders(fma_externalsourceid='...') so that re-running the connector
-    updates the existing row instead of creating a duplicate. Returns a dict
-    describing the API result.
+    Thin wrapper (Step 04 refactor) that delegates to the shared
+    alternate-key PATCH utility, keyed on fma_externalsourceid, so re-running
+    the connector updates the existing row instead of creating a duplicate.
     """
-    _require_requests()
-    external_id = record.get("fma_externalsourceid")
-
     # The plain-id fma_client helper key is not a real column; strip it before send.
     payload = {k: v for k, v in record.items() if k != "fma_client"}
-
-    url = (
-        f"{target_url.rstrip('/')}/api/data/v9.2/"
-        f"fma_workorders(fma_externalsourceid='{external_id}')"
+    return upsert_record(
+        payload,
+        "fma_workorders",
+        "fma_externalsourceid",
+        record.get("fma_externalsourceid"),
+        target_url,
+        access_token,
     )
-    headers = {
-        "Authorization": f"Bearer {access_token}",
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        "OData-MaxVersion": "4.0",
-        "OData-Version": "4.0",
-        "If-Match": "*",  # allow update; combined with PATCH this is an upsert
-    }
-    resp = requests.patch(url, headers=headers, data=json.dumps(payload), timeout=60)
-    resp.raise_for_status()
-    return {
-        "status_code": resp.status_code,
-        "external_id": external_id,
-        # 201 = created, 204 = updated (no content)
-        "created": resp.status_code == 201,
-    }
 
 
 # ---------------------------------------------------------------------------
