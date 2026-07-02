@@ -1,0 +1,32 @@
+{
+  "sourceTable": "WorkTask",
+  "targetTable": "fma_workorders",
+  "mappings": [
+    { "source": "WoNo", "target": "fma_externalsourceid", "transform": "toString" },
+    { "source": "WoNo", "target": "fma_workordernumber", "transform": "toString" },
+    { "source": "ObjState", "target": "fma_status", "transform": "mapIFSState" },
+    { "source": "PlanningDate", "target": "fma_scheduledstart", "transform": "toUTC" },
+    { "source": "FinishDate", "target": "fma_scheduledend", "transform": "toUTC" },
+    { "source": "RealTimeSta", "target": "fma_actualstart", "transform": "toUTC" },
+    { "source": "RealTimeFinish", "target": "fma_actualend", "transform": "toUTC" },
+    { "source": "EmpNo", "target": "fma_technicianid", "transform": "toString" },
+    { "source": "MchNo", "target": "fma_assetid", "transform": "toString" },
+    { "source": "ActualCost", "target": "fma_totalcost", "transform": "toCurrency" },
+    { "source": "ContractId", "target": "fma_slacompliant", "transform": "inferIFSSlaCCompliance" }
+  ],
+  "staticValues": {
+    "fma_sourcesystem": 100000003
+  },
+  "stateMap": {
+    "Released": "Open",
+    "Started": "In Progress",
+    "WorkDone": "In Progress",
+    "Reported": "Completed",
+    "Finished": "Completed",
+    "Cancelled": "Cancelled",
+    "Rejected": "Cancelled"
+  },
+  "laborCalculation": {
+    "comment": "IFS does not store labor minutes directly on WorkTask. Calculate from RealTimeSta and RealTimeFinish delta. Falls back to 0 if either is null."
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "sourcesystem": "IFS",
+  "deploymentType": "cloud",
+  "auth": {
+    "tokenUrl": "https://YOUR_IFS_INSTANCE.ifs.cloud/idp/connect/token",
+    "clientId": "YOUR_CLIENT_ID",
+    "clientSecret": "YOUR_CLIENT_SECRET",
+    "scope": "ifsapp offline_access",
+    "basicAuth": {
+      "username": "YOUR_USERNAME",
+      "password": "YOUR_PASSWORD",
+      "comment": "Used only for on-premise deployments — leave blank for IFS Cloud"
+    }
+  },
+  "sync": {
+    "baseUrl": "https://YOUR_IFS_INSTANCE.ifs.cloud/main/ifsapp/data",
+    "entity": "WorkTask",
+    "pageSize": 100,
+    "incrementalField": "RowVersion",
+    "initialSyncDaysBack": 90,
+    "select": "WoNo,TaskSeq,ObjState,PlanningDate,FinishDate,RealTimeSta,RealTimeFinish,MchNo,EmpNo,NoteText,WorkTypeId,ActualCost,ContractId,SnapShotCreatedDate,RowVersion"
+  },
+  "target": {
+    "dataverseUrl": "https://YOUR_TARGET_ORG.crm.dynamics.com",
+    "table": "fma_workorders"
+  }
+}
