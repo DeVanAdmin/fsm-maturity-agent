@@ -1,0 +1,76 @@
+{
+  "logicalName": "fma_technician",
+  "schemaName": "fma_Technician",
+  "displayName": "Technician",
+  "displayCollectionName": "Technicians",
+  "description": "Technician records normalized from any FSM platform.",
+  "ownershipType": "UserOwned",
+  "publisherPrefix": "fma",
+  "primaryIdAttribute": "fma_technicianid",
+  "primaryNameAttribute": "fma_name",
+  "columns": [
+    {
+      "logicalName": "fma_technicianid",
+      "displayName": "Technician",
+      "description": "Primary key.",
+      "type": "Uniqueidentifier",
+      "isPrimaryId": true,
+      "required": "SystemRequired"
+    },
+    {
+      "logicalName": "fma_client",
+      "displayName": "Client",
+      "description": "The client this technician belongs to.",
+      "type": "Lookup",
+      "targetTable": "fma_client",
+      "required": "ApplicationRequired"
+    },
+    {
+      "logicalName": "fma_externalsourceid",
+      "displayName": "External Source ID",
+      "description": "The technician ID from the originating FSM system.",
+      "type": "SingleLineText",
+      "format": "Text",
+      "maxLength": 200,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_name",
+      "displayName": "Name",
+      "description": "Technician full name.",
+      "type": "SingleLineText",
+      "format": "Text",
+      "maxLength": 200,
+      "isPrimaryName": true,
+      "required": "ApplicationRequired"
+    },
+    {
+      "logicalName": "fma_skillset",
+      "displayName": "Skillset",
+      "description": "JSON array of skills and certifications.",
+      "type": "Multiline",
+      "format": "TextArea",
+      "maxLength": 4000,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_region",
+      "displayName": "Region",
+      "description": "Operating region for this technician.",
+      "type": "SingleLineText",
+      "format": "Text",
+      "maxLength": 100,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_activestatus",
+      "displayName": "Active Status",
+      "description": "Is the technician currently active?",
+      "type": "TwoOptions",
+      "trueLabel": "Active",
+      "falseLabel": "Inactive",
+      "defaultValue": true,
+      "required": "None"
+    }
+  ]
+}

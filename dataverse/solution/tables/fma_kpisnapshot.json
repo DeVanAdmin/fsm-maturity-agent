@@ -1,0 +1,140 @@
+{
+  "logicalName": "fma_kpisnapshot",
+  "schemaName": "fma_KpiSnapshot",
+  "displayName": "KPI Snapshot",
+  "displayCollectionName": "KPI Snapshots",
+  "description": "Time-series KPI values per client per period. The agent writes here after every scoring run. This is the bridge between raw work order data and maturity scores.",
+  "ownershipType": "UserOwned",
+  "publisherPrefix": "fma",
+  "primaryIdAttribute": "fma_kpisnapshotid",
+  "primaryNameAttribute": "fma_name",
+  "columns": [
+    {
+      "logicalName": "fma_kpisnapshotid",
+      "displayName": "KPI Snapshot",
+      "description": "Primary key.",
+      "type": "Uniqueidentifier",
+      "isPrimaryId": true,
+      "required": "SystemRequired"
+    },
+    {
+      "logicalName": "fma_name",
+      "displayName": "Name",
+      "description": "Display label for the snapshot (e.g. client + period).",
+      "type": "SingleLineText",
+      "format": "Text",
+      "maxLength": 200,
+      "isPrimaryName": true,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_client",
+      "displayName": "Client",
+      "description": "The client this snapshot belongs to.",
+      "type": "Lookup",
+      "targetTable": "fma_client",
+      "required": "ApplicationRequired"
+    },
+    {
+      "logicalName": "fma_periodstart",
+      "displayName": "Period Start",
+      "description": "Start of the measurement period.",
+      "type": "DateTime",
+      "format": "DateAndTime",
+      "required": "ApplicationRequired"
+    },
+    {
+      "logicalName": "fma_periodend",
+      "displayName": "Period End",
+      "description": "End of the measurement period.",
+      "type": "DateTime",
+      "format": "DateAndTime",
+      "required": "ApplicationRequired"
+    },
+    {
+      "logicalName": "fma_ftfr",
+      "displayName": "First Time Fix Rate",
+      "description": "First Time Fix Rate (%).",
+      "type": "Decimal",
+      "precision": 2,
+      "minValue": 0,
+      "maxValue": 100,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_mttr",
+      "displayName": "Mean Time To Repair",
+      "description": "Mean Time to Repair (minutes).",
+      "type": "Decimal",
+      "precision": 2,
+      "minValue": 0,
+      "maxValue": 1000000,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_technicianutilization",
+      "displayName": "Technician Utilization",
+      "description": "Technician utilization (%).",
+      "type": "Decimal",
+      "precision": 2,
+      "minValue": 0,
+      "maxValue": 100,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_scheduleadherence",
+      "displayName": "Schedule Adherence",
+      "description": "Schedule adherence (%).",
+      "type": "Decimal",
+      "precision": 2,
+      "minValue": 0,
+      "maxValue": 100,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_slacompliance",
+      "displayName": "SLA Compliance",
+      "description": "SLA compliance (%).",
+      "type": "Decimal",
+      "precision": 2,
+      "minValue": 0,
+      "maxValue": 100,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_repeatvisitrate",
+      "displayName": "Repeat Visit Rate",
+      "description": "Repeat visit rate (%).",
+      "type": "Decimal",
+      "precision": 2,
+      "minValue": 0,
+      "maxValue": 100,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_costperworkorder",
+      "displayName": "Cost Per Work Order",
+      "type": "Currency",
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_assetuptime",
+      "displayName": "Asset Uptime",
+      "description": "Asset uptime (%).",
+      "type": "Decimal",
+      "precision": 2,
+      "minValue": 0,
+      "maxValue": 100,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_workordervolume",
+      "displayName": "Work Order Volume",
+      "description": "Total work orders in the period.",
+      "type": "WholeNumber",
+      "minValue": 0,
+      "maxValue": 100000000,
+      "required": "None"
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "logicalName": "fma_maturityscore",
+  "schemaName": "fma_MaturityScore",
+  "displayName": "Maturity Score",
+  "displayCollectionName": "Maturity Scores",
+  "description": "One record per client per scoring run. Stores the four dimension scores and the composite weighted score. The PCF scorecard control reads directly from this table.",
+  "ownershipType": "UserOwned",
+  "publisherPrefix": "fma",
+  "primaryIdAttribute": "fma_maturityscoreid",
+  "primaryNameAttribute": "fma_name",
+  "columns": [
+    {
+      "logicalName": "fma_maturityscoreid",
+      "displayName": "Maturity Score",
+      "description": "Primary key.",
+      "type": "Uniqueidentifier",
+      "isPrimaryId": true,
+      "required": "SystemRequired"
+    },
+    {
+      "logicalName": "fma_name",
+      "displayName": "Name",
+      "description": "Display label for the scoring run (e.g. client + scored-on date).",
+      "type": "SingleLineText",
+      "format": "Text",
+      "maxLength": 200,
+      "isPrimaryName": true,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_client",
+      "displayName": "Client",
+      "description": "The client this score belongs to.",
+      "type": "Lookup",
+      "targetTable": "fma_client",
+      "required": "ApplicationRequired"
+    },
+    {
+      "logicalName": "fma_kpisnapshot",
+      "displayName": "KPI Snapshot",
+      "description": "The KPI snapshot this score was calculated from.",
+      "type": "Lookup",
+      "targetTable": "fma_kpisnapshot",
+      "required": "ApplicationRequired"
+    },
+    {
+      "logicalName": "fma_scoredon",
+      "displayName": "Scored On",
+      "description": "When this scoring run occurred.",
+      "type": "DateTime",
+      "format": "DateAndTime",
+      "required": "ApplicationRequired"
+    },
+    {
+      "logicalName": "fma_operationalefficiencyscore",
+      "displayName": "Operational Efficiency Score",
+      "description": "Operational efficiency dimension score (1.0-5.0).",
+      "type": "Decimal",
+      "precision": 2,
+      "minValue": 1.0,
+      "maxValue": 5.0,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_customerexperiencescore",
+      "displayName": "Customer Experience Score",
+      "description": "Customer experience dimension score (1.0-5.0).",
+      "type": "Decimal",
+      "precision": 2,
+      "minValue": 1.0,
+      "maxValue": 5.0,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_financialperformancescore",
+      "displayName": "Financial Performance Score",
+      "description": "Financial performance dimension score (1.0-5.0).",
+      "type": "Decimal",
+      "precision": 2,
+      "minValue": 1.0,
+      "maxValue": 5.0,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_assetreliabilityscore",
+      "displayName": "Asset Reliability Score",
+      "description": "Asset reliability dimension score (1.0-5.0).",
+      "type": "Decimal",
+      "precision": 2,
+      "minValue": 1.0,
+      "maxValue": 5.0,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_compositescore",
+      "displayName": "Composite Score",
+      "description": "Weighted average of the four dimension scores (1.0-5.0).",
+      "type": "Decimal",
+      "precision": 2,
+      "minValue": 1.0,
+      "maxValue": 5.0,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_maturitylevel",
+      "displayName": "Maturity Level",
+      "description": "Maturity level derived from the composite score.",
+      "type": "Choice",
+      "required": "None",
+      "optionSet": {
+        "isGlobal": false,
+        "options": [
+          { "value": 10000, "label": "Basic (1)" },
+          { "value": 10001, "label": "Developing (2)" },
+          { "value": 10002, "label": "Defined (3)" },
+          { "value": 10003, "label": "Advanced (4)" },
+          { "value": 10004, "label": "Optimized (5)" }
+        ]
+      }
+    },
+    {
+      "logicalName": "fma_scoredbyagent",
+      "displayName": "Scored By Agent",
+      "description": "Was this scored by the agent (true) or manually (false)?",
+      "type": "TwoOptions",
+      "trueLabel": "Agent",
+      "falseLabel": "Manual",
+      "defaultValue": true,
+      "required": "None"
+    }
+  ]
+}

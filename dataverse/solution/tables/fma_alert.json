@@ -1,0 +1,164 @@
+{
+  "logicalName": "fma_alert",
+  "schemaName": "fma_Alert",
+  "displayName": "Alert",
+  "displayCollectionName": "Alerts",
+  "description": "Fired threshold alerts and Level 3 autonomous actions. Handles both Level 2 (threshold notifications) and Level 3 (autonomous action audit trail), distinguished by fma_alerttype.",
+  "ownershipType": "UserOwned",
+  "publisherPrefix": "fma",
+  "primaryIdAttribute": "fma_alertid",
+  "primaryNameAttribute": "fma_name",
+  "columns": [
+    {
+      "logicalName": "fma_alertid",
+      "displayName": "Alert",
+      "description": "Primary key.",
+      "type": "Uniqueidentifier",
+      "isPrimaryId": true,
+      "required": "SystemRequired"
+    },
+    {
+      "logicalName": "fma_name",
+      "displayName": "Name",
+      "description": "Display label for the alert.",
+      "type": "SingleLineText",
+      "format": "Text",
+      "maxLength": 300,
+      "isPrimaryName": true,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_client",
+      "displayName": "Client",
+      "description": "The client this alert is for.",
+      "type": "Lookup",
+      "targetTable": "fma_client",
+      "required": "ApplicationRequired"
+    },
+    {
+      "logicalName": "fma_alerttype",
+      "displayName": "Alert Type",
+      "description": "Distinguishes Level 2 notifications from Level 3 autonomous actions.",
+      "type": "Choice",
+      "required": "None",
+      "optionSet": {
+        "isGlobal": false,
+        "options": [
+          { "value": 10000, "label": "Threshold Breach" },
+          { "value": 10001, "label": "Anomaly" },
+          { "value": 10002, "label": "Autonomous Action" }
+        ]
+      }
+    },
+    {
+      "logicalName": "fma_kpiname",
+      "displayName": "KPI Name",
+      "description": "The KPI the alert relates to.",
+      "type": "SingleLineText",
+      "format": "Text",
+      "maxLength": 100,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_thresholdvalue",
+      "displayName": "Threshold Value",
+      "description": "The threshold that was configured.",
+      "type": "Decimal",
+      "precision": 2,
+      "minValue": -1000000000,
+      "maxValue": 1000000000,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_actualvalue",
+      "displayName": "Actual Value",
+      "description": "The observed value that triggered the alert.",
+      "type": "Decimal",
+      "precision": 2,
+      "minValue": -1000000000,
+      "maxValue": 1000000000,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_severity",
+      "displayName": "Severity",
+      "type": "Choice",
+      "required": "None",
+      "optionSet": {
+        "isGlobal": false,
+        "options": [
+          { "value": 10000, "label": "Critical" },
+          { "value": 10001, "label": "High" },
+          { "value": 10002, "label": "Medium" },
+          { "value": 10003, "label": "Low" }
+        ]
+      }
+    },
+    {
+      "logicalName": "fma_status",
+      "displayName": "Status",
+      "type": "Choice",
+      "required": "None",
+      "optionSet": {
+        "isGlobal": false,
+        "options": [
+          { "value": 10000, "label": "New" },
+          { "value": 10001, "label": "Acknowledged" },
+          { "value": 10002, "label": "Resolved" },
+          { "value": 10003, "label": "Overridden" }
+        ]
+      }
+    },
+    {
+      "logicalName": "fma_agentaction",
+      "displayName": "Agent Action",
+      "description": "What the agent did autonomously (Level 3).",
+      "type": "Multiline",
+      "format": "TextArea",
+      "maxLength": 8000,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_advisorresponse",
+      "displayName": "Advisor Response",
+      "description": "The human advisor's response to the alert.",
+      "type": "Multiline",
+      "format": "TextArea",
+      "maxLength": 8000,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_overriddenby",
+      "displayName": "Overridden By",
+      "description": "Who overrode the agent action.",
+      "type": "SingleLineText",
+      "format": "Text",
+      "maxLength": 200,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_overriddenon",
+      "displayName": "Overridden On",
+      "description": "When the override happened.",
+      "type": "DateTime",
+      "format": "DateAndTime",
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_createdon",
+      "displayName": "Created On",
+      "description": "When the alert was created.",
+      "type": "DateTime",
+      "format": "DateAndTime",
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_notificationsentat",
+      "displayName": "Notification Sent At",
+      "description": "When the outbound notification was sent.",
+      "type": "DateTime",
+      "format": "DateAndTime",
+      "required": "None"
+    }
+  ]
+}

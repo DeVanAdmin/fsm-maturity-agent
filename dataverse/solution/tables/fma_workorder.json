@@ -1,0 +1,186 @@
+{
+  "logicalName": "fma_workorder",
+  "schemaName": "fma_WorkOrder",
+  "displayName": "Work Order",
+  "displayCollectionName": "Work Orders",
+  "description": "Unified work order, normalized from any FSM platform (D365, Salesforce, ServiceNow, IFS, Custom).",
+  "ownershipType": "UserOwned",
+  "publisherPrefix": "fma",
+  "primaryIdAttribute": "fma_workorderid",
+  "primaryNameAttribute": "fma_workordernumber",
+  "columns": [
+    {
+      "logicalName": "fma_workorderid",
+      "displayName": "Work Order",
+      "description": "Primary key.",
+      "type": "Uniqueidentifier",
+      "isPrimaryId": true,
+      "required": "SystemRequired"
+    },
+    {
+      "logicalName": "fma_client",
+      "displayName": "Client",
+      "description": "The client this work order belongs to.",
+      "type": "Lookup",
+      "targetTable": "fma_client",
+      "required": "ApplicationRequired"
+    },
+    {
+      "logicalName": "fma_externalsourceid",
+      "displayName": "External Source ID",
+      "description": "The record ID from the originating FSM system. Preserved for full traceability.",
+      "type": "SingleLineText",
+      "format": "Text",
+      "maxLength": 200,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_sourcesystem",
+      "displayName": "Source System",
+      "description": "Originating FSM platform.",
+      "type": "Choice",
+      "required": "None",
+      "optionSet": {
+        "isGlobal": false,
+        "options": [
+          { "value": 10000, "label": "D365" },
+          { "value": 10001, "label": "Salesforce" },
+          { "value": 10002, "label": "ServiceNow" },
+          { "value": 10003, "label": "IFS" },
+          { "value": 10004, "label": "Custom" }
+        ]
+      }
+    },
+    {
+      "logicalName": "fma_workordernumber",
+      "displayName": "Work Order Number",
+      "description": "Human-readable work order number.",
+      "type": "SingleLineText",
+      "format": "Text",
+      "maxLength": 100,
+      "isPrimaryName": true,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_status",
+      "displayName": "Status",
+      "description": "Current work order status.",
+      "type": "Choice",
+      "required": "None",
+      "optionSet": {
+        "isGlobal": false,
+        "options": [
+          { "value": 10000, "label": "Open" },
+          { "value": 10001, "label": "In Progress" },
+          { "value": 10002, "label": "Completed" },
+          { "value": 10003, "label": "Cancelled" }
+        ]
+      }
+    },
+    {
+      "logicalName": "fma_scheduledstart",
+      "displayName": "Scheduled Start",
+      "type": "DateTime",
+      "format": "DateAndTime",
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_scheduledend",
+      "displayName": "Scheduled End",
+      "type": "DateTime",
+      "format": "DateAndTime",
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_actualstart",
+      "displayName": "Actual Start",
+      "type": "DateTime",
+      "format": "DateAndTime",
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_actualend",
+      "displayName": "Actual End",
+      "type": "DateTime",
+      "format": "DateAndTime",
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_firsttimefix",
+      "displayName": "First Time Fix",
+      "description": "Was the issue resolved on the first visit?",
+      "type": "TwoOptions",
+      "trueLabel": "Yes",
+      "falseLabel": "No",
+      "defaultValue": false,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_visitcount",
+      "displayName": "Visit Count",
+      "description": "Total number of visits for this work order.",
+      "type": "WholeNumber",
+      "minValue": 0,
+      "maxValue": 1000,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_technicianid",
+      "displayName": "Technician ID",
+      "description": "Reference to the assigned technician (external source ID).",
+      "type": "SingleLineText",
+      "format": "Text",
+      "maxLength": 200,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_assetid",
+      "displayName": "Asset ID",
+      "description": "Reference to the serviced asset (external source ID).",
+      "type": "SingleLineText",
+      "format": "Text",
+      "maxLength": 200,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_slacompliant",
+      "displayName": "SLA Compliant",
+      "description": "Was the SLA met for this work order?",
+      "type": "TwoOptions",
+      "trueLabel": "Yes",
+      "falseLabel": "No",
+      "defaultValue": false,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_laborminutes",
+      "displayName": "Labor Minutes",
+      "type": "WholeNumber",
+      "minValue": 0,
+      "maxValue": 1000000,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_travelminutes",
+      "displayName": "Travel Minutes",
+      "type": "WholeNumber",
+      "minValue": 0,
+      "maxValue": 1000000,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_totalcost",
+      "displayName": "Total Cost",
+      "type": "Currency",
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_syncedon",
+      "displayName": "Synced On",
+      "description": "When this record was last synced from the source system.",
+      "type": "DateTime",
+      "format": "DateAndTime",
+      "required": "None"
+    }
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "logicalName": "fma_benchmark",
+  "schemaName": "fma_Benchmark",
+  "displayName": "Benchmark",
+  "displayCollectionName": "Benchmarks",
+  "description": "Industry peer benchmarks by vertical and KPI. Seeded once and updated periodically.",
+  "ownershipType": "UserOwned",
+  "publisherPrefix": "fma",
+  "primaryIdAttribute": "fma_benchmarkid",
+  "primaryNameAttribute": "fma_name",
+  "columns": [
+    {
+      "logicalName": "fma_benchmarkid",
+      "displayName": "Benchmark",
+      "description": "Primary key.",
+      "type": "Uniqueidentifier",
+      "isPrimaryId": true,
+      "required": "SystemRequired"
+    },
+    {
+      "logicalName": "fma_name",
+      "displayName": "Name",
+      "description": "Descriptive name, e.g. \"FTFR - Telecom - Peer Average\".",
+      "type": "SingleLineText",
+      "format": "Text",
+      "maxLength": 200,
+      "isPrimaryName": true,
+      "required": "ApplicationRequired"
+    },
+    {
+      "logicalName": "fma_industryvertical",
+      "displayName": "Industry Vertical",
+      "description": "Industry vertical this benchmark applies to. Same options as fma_client.",
+      "type": "Choice",
+      "required": "None",
+      "optionSet": {
+        "isGlobal": false,
+        "options": [
+          { "value": 10000, "label": "Manufacturing" },
+          { "value": 10001, "label": "Utilities" },
+          { "value": 10002, "label": "HVAC" },
+          { "value": 10003, "label": "Telecom" },
+          { "value": 10004, "label": "Healthcare" },
+          { "value": 10005, "label": "Oil & Gas" },
+          { "value": 10006, "label": "Other" }
+        ]
+      }
+    },
+    {
+      "logicalName": "fma_kpiname",
+      "displayName": "KPI Name",
+      "description": "Machine name of the KPI, e.g. \"ftfr\", \"mttr\", \"utilization\".",
+      "type": "SingleLineText",
+      "format": "Text",
+      "maxLength": 100,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_benchmarktype",
+      "displayName": "Benchmark Type",
+      "description": "The kind of benchmark this value represents.",
+      "type": "Choice",
+      "required": "None",
+      "optionSet": {
+        "isGlobal": false,
+        "options": [
+          { "value": 10000, "label": "Peer Average" },
+          { "value": 10001, "label": "Best in Class" },
+          { "value": 10002, "label": "Minimum Acceptable" }
+        ]
+      }
+    },
+    {
+      "logicalName": "fma_value",
+      "displayName": "Value",
+      "description": "The benchmark value.",
+      "type": "Decimal",
+      "precision": 2,
+      "minValue": -1000000000,
+      "maxValue": 1000000000,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_unit",
+      "displayName": "Unit",
+      "description": "Unit of the value, e.g. %, minutes, currency.",
+      "type": "SingleLineText",
+      "format": "Text",
+      "maxLength": 50,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_sourcedate",
+      "displayName": "Source Date",
+      "description": "When the benchmark data was last updated.",
+      "type": "DateTime",
+      "format": "DateOnly",
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_sourcedescription",
+      "displayName": "Source Description",
+      "description": "Provenance/notes about where this benchmark came from.",
+      "type": "Multiline",
+      "format": "TextArea",
+      "maxLength": 4000,
+      "required": "None"
+    }
+  ]
+}

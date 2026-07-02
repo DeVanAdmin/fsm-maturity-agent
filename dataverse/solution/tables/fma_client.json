@@ -1,0 +1,99 @@
+{
+  "logicalName": "fma_client",
+  "schemaName": "fma_Client",
+  "displayName": "Client",
+  "displayCollectionName": "Clients",
+  "description": "Top-level org/client record. Every other table in the FSM Maturity Agent solution links back to a client.",
+  "ownershipType": "UserOwned",
+  "publisherPrefix": "fma",
+  "primaryIdAttribute": "fma_clientid",
+  "primaryNameAttribute": "fma_name",
+  "columns": [
+    {
+      "logicalName": "fma_clientid",
+      "displayName": "Client",
+      "description": "Primary key.",
+      "type": "Uniqueidentifier",
+      "isPrimaryId": true,
+      "required": "SystemRequired"
+    },
+    {
+      "logicalName": "fma_name",
+      "displayName": "Client Org Name",
+      "description": "Client organization name.",
+      "type": "SingleLineText",
+      "format": "Text",
+      "maxLength": 200,
+      "isPrimaryName": true,
+      "required": "ApplicationRequired"
+    },
+    {
+      "logicalName": "fma_industryvertical",
+      "displayName": "Industry Vertical",
+      "description": "Primary industry the client operates in.",
+      "type": "Choice",
+      "required": "None",
+      "optionSet": {
+        "isGlobal": false,
+        "options": [
+          { "value": 10000, "label": "Manufacturing" },
+          { "value": 10001, "label": "Utilities" },
+          { "value": 10002, "label": "HVAC" },
+          { "value": 10003, "label": "Telecom" },
+          { "value": 10004, "label": "Healthcare" },
+          { "value": 10005, "label": "Oil & Gas" },
+          { "value": 10006, "label": "Other" }
+        ]
+      }
+    },
+    {
+      "logicalName": "fma_fsmplatform",
+      "displayName": "FSM Platform",
+      "description": "One or more FSM platforms this client uses. Multi-select.",
+      "type": "MultiSelectChoice",
+      "required": "None",
+      "optionSet": {
+        "isGlobal": false,
+        "options": [
+          { "value": 10000, "label": "D365" },
+          { "value": 10001, "label": "Salesforce" },
+          { "value": 10002, "label": "ServiceNow" },
+          { "value": 10003, "label": "IFS" },
+          { "value": 10004, "label": "Custom" }
+        ]
+      }
+    },
+    {
+      "logicalName": "fma_subscriptionstatus",
+      "displayName": "Subscription Status",
+      "description": "Current subscription state.",
+      "type": "Choice",
+      "required": "None",
+      "optionSet": {
+        "isGlobal": false,
+        "options": [
+          { "value": 10000, "label": "Active" },
+          { "value": 10001, "label": "Trial" },
+          { "value": 10002, "label": "Suspended" }
+        ]
+      }
+    },
+    {
+      "logicalName": "fma_subscriptionstartdate",
+      "displayName": "Subscription Start Date",
+      "description": "Date the subscription began.",
+      "type": "DateTime",
+      "format": "DateOnly",
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_primarycontact",
+      "displayName": "Primary Contact",
+      "description": "Primary contact name at the client org.",
+      "type": "SingleLineText",
+      "format": "Text",
+      "maxLength": 200,
+      "required": "None"
+    }
+  ]
+}

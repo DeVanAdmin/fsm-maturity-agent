@@ -1,0 +1,7 @@
+{
+  "uniqueName": "FSMMaturityAgent",
+  "friendlyName": "FSM Maturity Agent",
+  "prefix": "fma",
+  "optionValuePrefix": 10000,
+  "description": "Publisher for the FSM Maturity Agent solution"
+}

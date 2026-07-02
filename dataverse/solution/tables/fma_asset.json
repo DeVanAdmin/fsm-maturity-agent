@@ -1,0 +1,105 @@
+{
+  "logicalName": "fma_asset",
+  "schemaName": "fma_Asset",
+  "displayName": "Asset",
+  "displayCollectionName": "Assets",
+  "description": "Equipment/asset records with maintenance history, normalized from any FSM platform.",
+  "ownershipType": "UserOwned",
+  "publisherPrefix": "fma",
+  "primaryIdAttribute": "fma_assetid",
+  "primaryNameAttribute": "fma_name",
+  "columns": [
+    {
+      "logicalName": "fma_assetid",
+      "displayName": "Asset",
+      "description": "Primary key.",
+      "type": "Uniqueidentifier",
+      "isPrimaryId": true,
+      "required": "SystemRequired"
+    },
+    {
+      "logicalName": "fma_client",
+      "displayName": "Client",
+      "description": "The client this asset belongs to.",
+      "type": "Lookup",
+      "targetTable": "fma_client",
+      "required": "ApplicationRequired"
+    },
+    {
+      "logicalName": "fma_externalsourceid",
+      "displayName": "External Source ID",
+      "description": "The asset ID from the originating FSM system.",
+      "type": "SingleLineText",
+      "format": "Text",
+      "maxLength": 200,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_name",
+      "displayName": "Name",
+      "description": "Asset name.",
+      "type": "SingleLineText",
+      "format": "Text",
+      "maxLength": 200,
+      "isPrimaryName": true,
+      "required": "ApplicationRequired"
+    },
+    {
+      "logicalName": "fma_assettype",
+      "displayName": "Asset Type",
+      "description": "Category/type of the asset.",
+      "type": "SingleLineText",
+      "format": "Text",
+      "maxLength": 100,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_location",
+      "displayName": "Location",
+      "description": "Physical location of the asset.",
+      "type": "SingleLineText",
+      "format": "Text",
+      "maxLength": 200,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_installdate",
+      "displayName": "Install Date",
+      "type": "DateTime",
+      "format": "DateOnly",
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_lastservicedate",
+      "displayName": "Last Service Date",
+      "type": "DateTime",
+      "format": "DateOnly",
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_uptimepercent",
+      "displayName": "Uptime Percent",
+      "description": "Asset uptime as a percentage.",
+      "type": "Decimal",
+      "precision": 2,
+      "minValue": 0,
+      "maxValue": 100,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_maintenancemode",
+      "displayName": "Maintenance Mode",
+      "description": "Maintenance strategy applied to this asset.",
+      "type": "Choice",
+      "required": "None",
+      "optionSet": {
+        "isGlobal": false,
+        "options": [
+          { "value": 10000, "label": "Reactive" },
+          { "value": 10001, "label": "Preventive" },
+          { "value": 10002, "label": "Predictive" }
+        ]
+      }
+    }
+  ]
+}

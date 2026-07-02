@@ -1,0 +1,150 @@
+{
+  "logicalName": "fma_recommendation",
+  "schemaName": "fma_Recommendation",
+  "displayName": "Recommendation",
+  "displayCollectionName": "Recommendations",
+  "description": "Agent-generated next-best actions with an advisor review workflow.",
+  "ownershipType": "UserOwned",
+  "publisherPrefix": "fma",
+  "primaryIdAttribute": "fma_recommendationid",
+  "primaryNameAttribute": "fma_title",
+  "columns": [
+    {
+      "logicalName": "fma_recommendationid",
+      "displayName": "Recommendation",
+      "description": "Primary key.",
+      "type": "Uniqueidentifier",
+      "isPrimaryId": true,
+      "required": "SystemRequired"
+    },
+    {
+      "logicalName": "fma_client",
+      "displayName": "Client",
+      "description": "The client this recommendation is for.",
+      "type": "Lookup",
+      "targetTable": "fma_client",
+      "required": "ApplicationRequired"
+    },
+    {
+      "logicalName": "fma_maturityscore",
+      "displayName": "Maturity Score",
+      "description": "The scoring run that produced this recommendation.",
+      "type": "Lookup",
+      "targetTable": "fma_maturityscore",
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_title",
+      "displayName": "Title",
+      "description": "Short recommendation title.",
+      "type": "SingleLineText",
+      "format": "Text",
+      "maxLength": 300,
+      "isPrimaryName": true,
+      "required": "ApplicationRequired"
+    },
+    {
+      "logicalName": "fma_description",
+      "displayName": "Description",
+      "description": "Full recommendation detail.",
+      "type": "Multiline",
+      "format": "TextArea",
+      "maxLength": 8000,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_triggeringkpi",
+      "displayName": "Triggering KPI",
+      "description": "Which KPI triggered this recommendation.",
+      "type": "SingleLineText",
+      "format": "Text",
+      "maxLength": 100,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_triggeringvalue",
+      "displayName": "Triggering Value",
+      "description": "The KPI value that triggered this recommendation.",
+      "type": "Decimal",
+      "precision": 2,
+      "minValue": -1000000000,
+      "maxValue": 1000000000,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_benchmarkgap",
+      "displayName": "Benchmark Gap",
+      "description": "How far below benchmark the triggering value is.",
+      "type": "Decimal",
+      "precision": 2,
+      "minValue": -1000000000,
+      "maxValue": 1000000000,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_priority",
+      "displayName": "Priority",
+      "type": "Choice",
+      "required": "None",
+      "optionSet": {
+        "isGlobal": false,
+        "options": [
+          { "value": 10000, "label": "Critical" },
+          { "value": 10001, "label": "High" },
+          { "value": 10002, "label": "Medium" },
+          { "value": 10003, "label": "Low" }
+        ]
+      }
+    },
+    {
+      "logicalName": "fma_status",
+      "displayName": "Status",
+      "type": "Choice",
+      "required": "None",
+      "optionSet": {
+        "isGlobal": false,
+        "options": [
+          { "value": 10000, "label": "New" },
+          { "value": 10001, "label": "In Review" },
+          { "value": 10002, "label": "Approved" },
+          { "value": 10003, "label": "Rejected" },
+          { "value": 10004, "label": "Implemented" }
+        ]
+      }
+    },
+    {
+      "logicalName": "fma_advisornotes",
+      "displayName": "Advisor Notes",
+      "description": "Notes added by the human advisor during review.",
+      "type": "Multiline",
+      "format": "TextArea",
+      "maxLength": 8000,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_createdon",
+      "displayName": "Created On",
+      "description": "When the recommendation was generated.",
+      "type": "DateTime",
+      "format": "DateAndTime",
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_reviewedby",
+      "displayName": "Reviewed By",
+      "description": "Who reviewed the recommendation.",
+      "type": "SingleLineText",
+      "format": "Text",
+      "maxLength": 200,
+      "required": "None"
+    },
+    {
+      "logicalName": "fma_reviewedon",
+      "displayName": "Reviewed On",
+      "description": "When the recommendation was reviewed.",
+      "type": "DateTime",
+      "format": "DateAndTime",
+      "required": "None"
+    }
+  ]
+}

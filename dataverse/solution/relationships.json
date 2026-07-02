@@ -1,0 +1,104 @@
+{
+  "publisherPrefix": "fma",
+  "relationships": [
+    {
+      "schemaName": "fma_workorder_client",
+      "type": "OneToMany",
+      "referencedTable": "fma_client",
+      "referencingTable": "fma_workorder",
+      "referencingAttribute": "fma_client",
+      "cardinality": "N:1",
+      "required": "ApplicationRequired",
+      "cascadeDelete": "RemoveLink",
+      "description": "Each work order belongs to one client."
+    },
+    {
+      "schemaName": "fma_technician_client",
+      "type": "OneToMany",
+      "referencedTable": "fma_client",
+      "referencingTable": "fma_technician",
+      "referencingAttribute": "fma_client",
+      "cardinality": "N:1",
+      "required": "ApplicationRequired",
+      "cascadeDelete": "RemoveLink",
+      "description": "Each technician belongs to one client."
+    },
+    {
+      "schemaName": "fma_asset_client",
+      "type": "OneToMany",
+      "referencedTable": "fma_client",
+      "referencingTable": "fma_asset",
+      "referencingAttribute": "fma_client",
+      "cardinality": "N:1",
+      "required": "ApplicationRequired",
+      "cascadeDelete": "RemoveLink",
+      "description": "Each asset belongs to one client."
+    },
+    {
+      "schemaName": "fma_kpisnapshot_client",
+      "type": "OneToMany",
+      "referencedTable": "fma_client",
+      "referencingTable": "fma_kpisnapshot",
+      "referencingAttribute": "fma_client",
+      "cardinality": "N:1",
+      "required": "ApplicationRequired",
+      "cascadeDelete": "RemoveLink",
+      "description": "Each KPI snapshot belongs to one client."
+    },
+    {
+      "schemaName": "fma_maturityscore_client",
+      "type": "OneToMany",
+      "referencedTable": "fma_client",
+      "referencingTable": "fma_maturityscore",
+      "referencingAttribute": "fma_client",
+      "cardinality": "N:1",
+      "required": "ApplicationRequired",
+      "cascadeDelete": "RemoveLink",
+      "description": "Each maturity score belongs to one client."
+    },
+    {
+      "schemaName": "fma_maturityscore_kpisnapshot",
+      "type": "OneToMany",
+      "referencedTable": "fma_kpisnapshot",
+      "referencingTable": "fma_maturityscore",
+      "referencingAttribute": "fma_kpisnapshot",
+      "cardinality": "N:1",
+      "required": "ApplicationRequired",
+      "cascadeDelete": "RemoveLink",
+      "description": "Each maturity score is calculated from one KPI snapshot."
+    },
+    {
+      "schemaName": "fma_recommendation_client",
+      "type": "OneToMany",
+      "referencedTable": "fma_client",
+      "referencingTable": "fma_recommendation",
+      "referencingAttribute": "fma_client",
+      "cardinality": "N:1",
+      "required": "ApplicationRequired",
+      "cascadeDelete": "RemoveLink",
+      "description": "Each recommendation belongs to one client."
+    },
+    {
+      "schemaName": "fma_recommendation_maturityscore",
+      "type": "OneToMany",
+      "referencedTable": "fma_maturityscore",
+      "referencingTable": "fma_recommendation",
+      "referencingAttribute": "fma_maturityscore",
+      "cardinality": "N:1",
+      "required": "None",
+      "cascadeDelete": "RemoveLink",
+      "description": "Each recommendation may reference the scoring run that produced it."
+    },
+    {
+      "schemaName": "fma_alert_client",
+      "type": "OneToMany",
+      "referencedTable": "fma_client",
+      "referencingTable": "fma_alert",
+      "referencingAttribute": "fma_client",
+      "cardinality": "N:1",
+      "required": "ApplicationRequired",
+      "cascadeDelete": "RemoveLink",
+      "description": "Each alert belongs to one client."
+    }
+  ]
+}
